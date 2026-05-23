@@ -13,4 +13,13 @@ class Especialidade extends Model
         'desc_esp'
     ];
     
+     public function profissionais()
+    {
+        return $this->belongsToMany(
+            Profissional::class,
+            'especialidades_profissionais',
+            'especialidade_id',
+            'profissional_id'
+        )->withPivot('valor_consulta');
+    }
 }

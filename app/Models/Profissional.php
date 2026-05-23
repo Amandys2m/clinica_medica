@@ -14,4 +14,14 @@ class Profissional extends Model
         'rg',
         'data_nasc'
     ];
+
+     public function especialidades()
+    {
+        return $this->belongsToMany(
+            Especialidade::class,
+            'especialidades_profissionais',
+            'profissional_id',
+            'especialidade_id'
+        )->withPivot('valor_consulta');
+    }
 }
