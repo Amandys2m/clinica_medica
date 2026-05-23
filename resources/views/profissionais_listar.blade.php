@@ -15,6 +15,7 @@
             <th>CPF</th>
             <th>RG</th>
             <th>Data de Nascimento</th>
+            <th>Especialidade</th>
             <th>Data criação</th>
             <th>Operações</th>
         </tr>
@@ -27,6 +28,27 @@
             <td>{{ $p->cpf }}</td>
             <td>{{ $p->rg }}</td>
             <td>{{ $p->data_nasc }}</td>
+            <td>
+                @if($p->especialidades->count() > 0)
+                    <ul class="mb-0">
+                        @foreach($p->especialidades as $e)
+                            <li>
+                                {{ $e->nome }}
+                                -
+                                R$ {{ $e->pivot->valor_consulta }}
+                            </li>
+                        @endforeach
+                    </ul>
+
+                @else
+
+                    <span class="text-muted">
+                        Sem especialidades
+                    </span>
+
+                @endif
+
+            </td>
             <td>{{ $p->created_at }}</td>
             <td>
                 <a href="{{ route('profissional.editar', ['id' => $p->id]) }}" 

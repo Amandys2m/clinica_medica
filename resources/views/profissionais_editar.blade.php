@@ -12,12 +12,12 @@
     <label for="nome">Nome</label>
     </div>
     <div class="form-floating mb-3">
-    <input type="number" class="form-control" id="cpf" 
+    <input type="text" class="form-control" id="cpf" 
     placeholder="CPF" name="cpf" value="{{ $p->cpf }}">
     <label for="cpf">CPF</label>
     </div>
     <div class="form-floating mb-3">
-    <input type="number" class="form-control" id="rg" value="{{ $p->rg }}" 
+    <input type="text" class="form-control" id="rg" value="{{ $p->rg }}" 
     placeholder="rg" name="rg">
     <label for="rg">RG</label>
     </div>
@@ -26,6 +26,31 @@
     placeholder="Data Nascimento" name="data_nasc">
     <label for="data_nasc">Data de Nascimento</label>
     </div>
+
+    <div class="form-floating mb-3">
+    <select name="especialidade" id="especialidade" class="form-select">
+    <option value="">Selecione uma especialidade</option>
+        @foreach($especialidades as $e)
+        <option value="{{ $e->id }}"
+            @if($p->especialidades->first() &&
+                $p->especialidades->first()->id == $e->id)
+                selected
+            @endif>
+            {{ $e->nome }}
+        </option>
+        @endforeach
+    </select>
+
+    <label for="especialidade">Especialidade</label>
+    </div>
+
+    <div class="form-floating mb-3">
+    <input type="number" step="0.01" class="form-control" id="valor_consulta"
+        name="valor_consulta" placeholder="Valor consulta"
+        value="@if($p->especialidades->first()){{ $p->especialidades->first()->pivot->valor_consulta }}@endif">
+    <label for="valor_consulta">Valor da consulta</label>
+    </div>
+
     
     <input type="submit" value="Salvar" 
         class="btn btn-success" />
