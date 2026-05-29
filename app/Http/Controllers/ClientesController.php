@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ClientesController extends Controller
 {
@@ -18,6 +20,15 @@ class ClientesController extends Controller
         return view('cliente_novo');
     }
     function salvar(Request $req, $id=null){
+        $req->validate([
+            'nome'=>'required|string|max:255',
+            'cpf'=>'required|string|max:11',
+            'rg'=>'required|string|max:11',
+            'data_nasc'=>'required|date',
+            'telefone'=>'required|string|max:15',
+            'email'=>'required|email',
+            'senha'=> $id ? 'nullable|string|min:6' : 'required|string|min:6'
+        ]);
         if ($id) {
             $c = Cliente::findOrFail($id);
             $operacao = "alterado";
@@ -31,8 +42,21 @@ class ClientesController extends Controller
         $c->data_nasc = $req->data_nasc;
         $c->telefone = $req->telefone;
         $c->email = $req->email;
-        $c->senha = $req->senha;
+        if($req->senha){
+        $c->senha = Hash::make($req->senha); }
         $c->save();
+
+        if($operacao=="inserido"){
+            $user = new User();
+            $user->name = $req->nome;
+            $user->email = $req->email;
+            $user->password = Hash::make($req->senha);
+            $user->is_admin = false;
+            $user->save();
+
+            session()->flash("mensagem", "Cadastro realizado com sucesso. Faça login.");
+            return redirect ('/login');
+        }
 
         session()->flash("mensagem", "O cliente {$c->nome} foi {$operacao} com sucesso.");
 
