@@ -32,9 +32,9 @@
             <td>{{ $c->created_at }}</td>
             <td>
                 <a href="{{ route('cliente.edit', ['id' => $c->id]) }}" 
-                    class="btn btn-warning">
+                    class="btn btn-outline-warning">
                     Alterar</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $c->id }}">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $c->id }}">
                 Excluir
                 </button>
             </td>
