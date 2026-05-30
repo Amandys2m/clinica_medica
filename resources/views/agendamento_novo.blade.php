@@ -3,11 +3,11 @@
 @section('titulo', 'Agendar Atendimento')
 
 @section('conteudo')
-<div class="card mt-5 shadow-sm border-0">
-    <div class="card-header bg-success text-white fw-bold">
+<div class="card mt-5 border-0">
+    <div class="card-header bg-success text-white text-center fw-bold">
         Novo Agendamento
     </div>
-    <div class="card-body p-4">
+    <div class="card-body p-4 bg-light">
         
         @if ($errors->any())
             <div class="alert alert-danger">

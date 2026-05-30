@@ -40,7 +40,15 @@ class AgendamentoController extends Controller
             'data' => 'required|date|after_or_equal:today',
             'horario' => 'required|date_format:H:i',
         ]);
-        
+        $conflito = Agendamento::where('profissional_id', $request->profissional_id)
+                               ->where('data', $request->data)
+                               ->where('horario', $request->horario)
+                               ->first();
+        if ($conflito){
+            return back()
+                   ->withErrors(['horario' => 'Este horário já está reservado para o profissional selecionado. Por favor, escolha outro.'])
+                   ->withInput();
+        }
         $cliente = Cliente::where('email', Auth::user()->email)->first();
 
         $agendamento = new Agendamento();
