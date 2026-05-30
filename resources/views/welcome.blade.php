@@ -48,9 +48,9 @@
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link fw-bold py-1 px-0 active" href="#">Início</a>
                         @auth
-                            <a class="nav-link fw-bold py-1 px-0 active" href="#">Painel de Controle</a>
+                            <a class="nav-link fw-bold py-1 px-0 active" href="{{ route('dashboard') }}">Painel de Controle</a>
                         @else
-                            <a class="nav-link fw-bold py-1 px-0 active" href="#">Login</a>
+                            <a class="nav-link fw-bold py-1 px-0 active" href="{{ route('login') }}">Login</a>
                         @endauth
                 </nav>
             </div>

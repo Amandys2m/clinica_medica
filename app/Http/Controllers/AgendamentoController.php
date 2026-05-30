@@ -50,7 +50,7 @@ class AgendamentoController extends Controller
         $agendamento->horario = $request->horario;
         $agendamento->save();
 
-        return redirect('/')->with('sucesso', 'Consulta agendada com sucesso!');
+        return redirect('/dashboard')->with('sucesso', 'Consulta agendada com sucesso!');
     }
 
     /**
