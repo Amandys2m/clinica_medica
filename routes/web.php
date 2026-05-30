@@ -42,6 +42,10 @@ Route::get('/profissionais/novo', [ProfissionaisController::class, 'novo'])->nam
 Route::post('/profissionais/novo/{id?}', [ProfissionaisController::class, 'salvar'])->name('profissional.salvar');
 Route::get('/profissionais/editar/{id}', [ProfissionaisController::class, 'editar'])->name('profissional.editar');
 Route::get('/profissionais/delete/{id}', [ProfissionaisController::class, 'delete'])->name('profissional.delete');
+
+Route::get('/agendamentos', [AgendamentoController::class, 'listar']);
+Route::get('/agendamentos/editar/{id}', [AgendamentoController::class, 'editar'])->name('agendamento.editar');
+Route::get('/agendamentos/delete/{id}', [AgendamentoController::class, 'delete'])->name('agendamento.delete');
 });
 Route::middleware(['auth'])->group(function () {
 Route::get('/agendamentos/novo', [AgendamentoController::class, 'novo'])->name('agendamento.novo');

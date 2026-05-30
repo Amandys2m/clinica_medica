@@ -12,6 +12,10 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user(); 
+        if ($user->is_admin) {
+            $agendamentos = collect();
+            return view('dashboard', compact('user', 'agendamentos'));
+        }
         $cliente = Cliente::where('email', $user->email)->first();
         $agendamentos =Agendamento::with('profissional')
             ->where("cliente_id", $cliente->id)

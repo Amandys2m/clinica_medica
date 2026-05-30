@@ -14,6 +14,12 @@ class AgendamentoController extends Controller
     /**
      * Display a listing of the resource.
      */
+       public function listar()
+    {
+        $agendamentos = Agendamento::with(['cliente', 'profissional'])->get();
+        
+        return view('agendamentos_listar', compact('agendamentos'));
+    }
     public function novo(Request $request)
     {
         $especialidades = Especialidade::all();
@@ -64,17 +70,24 @@ class AgendamentoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
+    public function editar($id)
+        {
+            $agendamento = Agendamento::findOrFail($id);
+            $especialidades = Especialidade::all();
+            $profissionais = Profissional::all();
+            
+            return view('agendamento_editar', compact('agendamento', 'especialidades', 'profissionais'));
+        }
     /**
      * Display the specified resource.
      */
-    public function show(Agendamento $agendamento)
+    public function delete($id)
     {
-        //
+        $agendamento = Agendamento::findOrFail($id);
+        $agendamento->delete();
+
+        return back()->with('mensagem', 'Agendamento excluído com sucesso.');
     }
 
     /**
