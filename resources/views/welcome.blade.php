@@ -44,20 +44,20 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column overflow-auto">
         <header class="mb-auto">
             <div>
-                <h3 class="float-md-start mb-0 fw-bold">Centro Clínico</h3>
+                <h3 class="float-md-start mb-0 fw-bold text-secondary">Centro Clínico</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link fw-bold py-1 px-0 active" href="#">Início</a>
+                    <a class="nav-link fw-bold py-1 px-0 active text-secondary" href="#">Início</a>
                         @auth
-                            <a class="nav-link fw-bold py-1 px-0 active" href="{{ route('dashboard') }}">Painel de Controle</a>
+                            <a class="nav-link fw-bold py-1 px-0 active text-secondary" href="{{ route('dashboard') }}">Painel de Controle</a>
                         @else
-                            <a class="nav-link fw-bold py-1 px-0 active" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link fw-bold py-1 px-0 active text-secondary" href="{{ route('login') }}">Login</a>
                         @endauth
                 </nav>
             </div>
         </header>
 
         <main class="px-3 mt-5">
-            <h1 class="display-4 fw-bold">Centro Clínico Caçador</h1>
+            <h1 class="display-4 fw-bold text-secondary">Centro Clínico Caçador</h1>
             <p class="lead mt-3">Encontre diversas especialidades médicas em um só lugar e agende seu atendimento com facilidade.</p>
             <p class="lead mt-4">
                 <a href="{{ route('cliente.novo') }}" class="btn btn-lg btn-success fw-bold text-white px-4 py-2">

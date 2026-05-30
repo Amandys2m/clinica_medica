@@ -13,22 +13,16 @@
         </form>
     </div>
 
-    @if(session('sucesso'))
-        <div class="alert alert-success shadow-sm">
-            {{ session('sucesso') }}
-        </div>
-    @endif
-
-    <div class="row-center">
+    <div class="row justify-content-center">
         <div class="col-md-12 mb-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-dark text-center text-white fw-bold">
+            <div class="card border-0 h-100">
+                <div class="card-header bg-secondary text-center text-white fw-bold">
                     Atendimentos
                 </div>
-                <div class="card-body d-flex flex-column text-center p-4">
+                <div class="card-body bg-light d-flex flex-column text-center p-4">
                     <h5 class="card-title text-success mb-3">Nova Consulta</h5>
                     <p class="card-text text-muted mb-4">Agende um novo atendimento com nossa equipe de profissionais.</p>
-                    <a href="{{ route('agendamento.novo') }}" class="btn btn-success mt-auto fw-bold col-md-4">Agendar Agora</a>
+                    <a href="{{ route('agendamento.novo') }}" class="btn btn-success mt-auto fw-bold mx-auto col-md-4">Agendar Agora</a>
                 </div>
             </div>
         </div>
