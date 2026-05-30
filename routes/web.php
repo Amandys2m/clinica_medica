@@ -7,6 +7,8 @@ use App\Http\Controllers\ConveniosController;
 use App\Http\Controllers\ProfissionaisController;
 use App\Models\Especialidade;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
@@ -18,7 +20,7 @@ Route::get('/', function () {
 Route::get('/clientes/novo', [ClientesController::class, 'novo'])->name('cliente.novo');
 Route::post('/clientes/novo/{id?}', [ClientesController::class, 'salvar'])->name('cliente.salvar');
 
-#Route::middleware(['auth','is_admin'])->group(function () {
+Route::middleware(['auth','is_admin'])->group(function () {
 Route::get('/clientes', [ClientesController::class, 'listar']);
 Route::get('/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('cliente.edit');
 Route::get('/clientes/delete/{id}', [ClientesController::class, 'delete'])->name('cliente.delete');
@@ -40,8 +42,12 @@ Route::get('/profissionais/novo', [ProfissionaisController::class, 'novo'])->nam
 Route::post('/profissionais/novo/{id?}', [ProfissionaisController::class, 'salvar'])->name('profissional.salvar');
 Route::get('/profissionais/editar/{id}', [ProfissionaisController::class, 'editar'])->name('profissional.editar');
 Route::get('/profissionais/delete/{id}', [ProfissionaisController::class, 'delete'])->name('profissional.delete');
-#});
-#Route::middleware(['auth'])->group(function () {
-    Route::get('/agendamentos/novo', [AgendamentoController::class, 'novo'])->name('agendamento.novo');
-    Route::post('/agendamentos/salvar', [AgendamentoController::class, 'salvar'])->name('agendamento.salvar');
-#});
+});
+Route::middleware(['auth'])->group(function () {
+Route::get('/agendamentos/novo', [AgendamentoController::class, 'novo'])->name('agendamento.novo');
+Route::post('/agendamentos/salvar', [AgendamentoController::class, 'salvar'])->name('agendamento.salvar');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
