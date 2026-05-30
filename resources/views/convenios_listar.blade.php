@@ -26,9 +26,9 @@
             <td>{{ $cv->created_at }}</td>
             <td>
                 <a href="{{ route('convenio.editar', ['id' => $cv->id]) }}" 
-                    class="btn btn-warning">
+                    class="btn btn-outline-warning">
                     Alterar</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $cv->id }}">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $cv->id }}">
                 Excluir
                 </button>
             </td>

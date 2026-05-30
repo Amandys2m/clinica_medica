@@ -52,9 +52,9 @@
             <td>{{ $p->created_at }}</td>
             <td>
                 <a href="{{ route('profissional.editar', ['id' => $p->id]) }}" 
-                    class="btn btn-warning">
+                    class="btn btn-outline-warning">
                     Alterar</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $p->id }}">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $p->id }}">
                 Excluir
                 </button>
             </td>

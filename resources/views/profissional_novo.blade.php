@@ -7,19 +7,19 @@
 <form method="POST" action="{{ route('profissional.salvar') }}">
     @csrf
     <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome" value="{{ old ('email') }}">
     <label for="nome">Nome</label>
     </div>
     <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="cpf" placeholder="CPF" name="cpf">
+    <input type="text" class="form-control" id="cpf" placeholder="CPF" name="cpf" value="{{ old ('cpf') }}">
     <label for="cpf">CPF</label>
     </div>
     <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="rg" placeholder="RG" name="rg">
+    <input type="text" class="form-control" id="rg" placeholder="RG" name="rg" value="{{ old ('rg') }}">
     <label for="rg">RG</label>
     </div>
     <div class="form-floating mb-3">
-    <input type="date" class="form-control" id="data_nasc" placeholder="Data Nascimento" name="data_nasc">
+    <input type="date" class="form-control" id="data_nasc" placeholder="Data Nascimento" name="data_nasc" value="{{ old ('data_nasc') }}">
     <label for="data_nasc">Data de Nascimento</label>
     </div>
 

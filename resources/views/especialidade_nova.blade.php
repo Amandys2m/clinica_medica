@@ -7,11 +7,11 @@
 <form method="POST" action="{{ route('especialidade.salvar') }}">
     @csrf
     <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome" value="{{ old ('nome') }}">
     <label for="nome">Nome</label>
     </div>
      <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="desc_esp" placeholder="Descrição" name="desc_esp">
+    <input type="text" class="form-control" id="desc_esp" placeholder="Descrição" name="desc_esp" value="{{ old ('desc_esp') }}">
     <label for="desc_esp">Descrição</label>
     </div>
 
