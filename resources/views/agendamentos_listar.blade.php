@@ -55,10 +55,7 @@
         @endforeach
     </tbody>
 </table>
-
-<div class="mt-3">
-    <a class="btn btn-success" 
-        href="{{ route('agendamento.novo') }}">
-        Novo Agendamento</a>
+<div class="d-flex justify-content-center mt-4">
+    {{ $agendamentos->links('pagination::bootstrap-4') }}
 </div>
 @endsection

@@ -59,10 +59,7 @@
         @endforeach
     </tbody>
 </table>
-
-<div>
-    <a class="btn btn-success" 
-        href="{{ route('cliente.novo') }}">
-        Novo Cliente</a>
+<div class="d-flex justify-content-center mt-4">
+    {{ $clientes->links('pagination::bootstrap-4') }}
 </div>
 @endsection

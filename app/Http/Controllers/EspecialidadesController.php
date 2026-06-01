@@ -8,7 +8,7 @@ use App\Models\Especialidade;
 class EspecialidadesController extends Controller
 {
     function listar(){
-        $especialidades = Especialidade::all();
+        $especialidades = Especialidade::paginate(10);
 
         return view('especialidades_listar', compact('especialidades'));
     }
