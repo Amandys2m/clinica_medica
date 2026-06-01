@@ -9,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\Especialidade;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Convenio;
 class AgendamentoController extends Controller
 {
     /**
@@ -16,16 +17,22 @@ class AgendamentoController extends Controller
      */
        public function listar()
     {
-        $agendamentos = Agendamento::with(['cliente', 'profissional'])->get();
+        $agendamentos = Agendamento::with(['cliente', 'profissional'])->paginate(10);
         
         return view('agendamentos_listar', compact('agendamentos'));
     }
     public function novo(Request $request)
     {
         $especialidades = Especialidade::all();
-        $profissionais = collect();
+        $convenios = Convenio::all();
 
         $especialidadeSelecionada = $request->especialidade_id;
+        $profissionalSelecionado = $request->profissional_id;
+        $dataSelecionada = $request->data;
+
+        $profissionais = collect();
+        $horariosLivres = [];
+
         if ($especialidadeSelecionada) {
             $profissionais = DB::table('profissionais')
                 ->join('especialidades_profissionais', 'profissionais.id', '=', 'especialidades_profissionais.profissional_id')
@@ -33,7 +40,25 @@ class AgendamentoController extends Controller
                 ->select('profissionais.id', 'profissionais.nome')
                 ->get();
         }
-        return view('agendamento_novo', compact('especialidades', 'profissionais', 'especialidadeSelecionada'));
+
+        if ($profissionalSelecionado && $dataSelecionada) {
+            $todosHorarios = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+            
+            $ocupados = Agendamento::where('profissional_id', $profissionalSelecionado)
+                ->whereDate('data', $dataSelecionada)
+                ->pluck('horario')
+                ->map(function ($tempo) {
+                    return \Carbon\Carbon::parse($tempo)->format('H:i');
+                })
+                ->toArray();
+
+            $horariosLivres = array_values(array_diff($todosHorarios, $ocupados));
+        }
+
+        return view('agendamento_novo', compact(
+            'especialidades', 'profissionais', 'convenios', 
+            'especialidadeSelecionada', 'profissionalSelecionado', 'dataSelecionada', 'horariosLivres'
+        ));
     }
 
     /**
@@ -62,6 +87,7 @@ class AgendamentoController extends Controller
         $agendamento->profissional_id = $request->profissional_id;
         $agendamento->data = $request->data;
         $agendamento->horario = $request->horario;
+        $agendamento->convenio_id = $request->convenio_id;
         $agendamento->save();
 
         return redirect('/dashboard')->with('sucesso', 'Consulta agendada com sucesso!');

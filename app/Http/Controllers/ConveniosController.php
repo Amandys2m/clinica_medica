@@ -8,7 +8,7 @@ use App\Models\Convenio;
 class ConveniosController extends Controller
 {
     function listar(){
-        $convenios = Convenio::all();
+        $convenios = Convenio::paginate(10);
 
         return view('convenios_listar', compact('convenios'));
     }

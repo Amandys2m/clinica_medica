@@ -53,7 +53,9 @@
         @endforeach
     </tbody>
 </table>
-
+<div class="d-flex justify-content-center mt-4">
+    {{ $convenios->links('pagination::bootstrap-4') }}
+</div>
 <div>
     <a class="btn btn-success" 
         href="{{ route('convenio.novo') }}">

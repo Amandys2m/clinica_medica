@@ -9,7 +9,7 @@ use App\Models\Especialidade;
 class ProfissionaisController extends Controller
 {
    function listar(){
-        $profissionais = Profissional::with('especialidades')->get();
+        $profissionais = Profissional::with('especialidades')->paginate(10);
 
         return view('profissionais_listar', compact('profissionais'));
     }

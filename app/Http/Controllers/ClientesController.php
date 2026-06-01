@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class ClientesController extends Controller
 {
     function listar(){
-        $clientes = Cliente::all();
+        $clientes = Cliente::paginate(10);
 
         return view('clientes_listar', compact('clientes'));
     }

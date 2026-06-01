@@ -21,7 +21,7 @@ class DashboardController extends Controller
             ->where("cliente_id", $cliente->id)
             ->orderBy("data", 'desc')
             ->orderBy("horario", 'desc')
-            ->get();
+            ->paginate(5);
         return view('dashboard', compact('user','agendamentos'));
     }
 }
