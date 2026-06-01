@@ -25,7 +25,8 @@
 
         .nav-masthead .nav-link:hover,
         .nav-masthead .nav-link:focus {
-            border-bottom-color: #212529(255, 255, 255, .25);
+            color: #212529;
+            border-bottom-color: #dee2e6;
         }
 
         .nav-masthead .nav-link + .nav-link {

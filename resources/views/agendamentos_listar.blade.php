@@ -29,9 +29,6 @@
             <td>{{ \Carbon\Carbon::parse($agendamento->data)->format('d/m/Y') }}</td>
             <td>{{ \Carbon\Carbon::parse($agendamento->horario)->format('H:i') }}</td>
             <td>
-                <a href="{{ route('agendamento.editar', ['id' => $agendamento->id]) }}" 
-                    class="btn btn-outline-warning">
-                    Alterar</a>
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $agendamento->id }}">
                 Excluir
                 </button>
