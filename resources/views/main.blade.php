@@ -28,6 +28,16 @@
         }
         
     </style>
+        @if(env('MIX_GOOGLE_ANALYTICS_ID'))
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('MIX_GOOGLE_ANALYTICS_ID') }}"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', "{{ env('MIX_GOOGLE_ANALYTICS_ID') }}");
+            </script>
+        @endif
     </head>
     <body>
          <header class="py-3 mb-4 border-bottom bg-white">
