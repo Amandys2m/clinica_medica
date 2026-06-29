@@ -142,7 +142,12 @@ class AgendamentoController extends Controller
         }
 
         try {
-            $response = Http::post($url . '/api/compras', [
+           $response = Http::withoutVerifying() 
+                ->withHeaders([
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($url . '/api/compras', [
                 'cpf'   => $agendamento->cliente->cpf,
                 'token' => $token,
                 'valor' => $valorConsulta,
@@ -158,10 +163,13 @@ class AgendamentoController extends Controller
                 $mensagemErro = $response->json('message') ?? 'Transação negada.';
                 return redirect()->back()->with('erro', 'Pagamento recusado: ' . $mensagemErro);
             }
-            
+           // } catch (\Exception $e) {
+            // dd($e->getMessage(), $e->getTraceAsString()); 
+             
+
         } catch (\Exception $e) {
             return redirect()->back()->with('erro', 'O sistema de pagamentos está indisponível.');
-        }
+    }
 }
 
     /**
