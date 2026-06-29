@@ -9,6 +9,7 @@ use App\Models\Especialidade;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ConfiguracaoController;
 
 
 Route::get('/', function () {
@@ -46,11 +47,15 @@ Route::get('/profissionais/delete/{id}', [ProfissionaisController::class, 'delet
 Route::get('/agendamentos', [AgendamentoController::class, 'listar']);
 Route::get('/agendamentos/editar/{id}', [AgendamentoController::class, 'editar'])->name('agendamento.editar');
 Route::get('/agendamentos/delete/{id}', [AgendamentoController::class, 'delete'])->name('agendamento.delete');
+
+Route::get('/configuracoes', [ConfiguracaoController::class, 'index'])->name('configuracoes.index');
+Route::post('/configuracoes', [ConfiguracaoController::class, 'salvar'])->name('configuracoes.salvar');
 });
 Route::middleware(['auth'])->group(function () {
 Route::get('/agendamentos/novo', [AgendamentoController::class, 'novo'])->name('agendamento.novo');
 Route::post('/agendamentos/salvar', [AgendamentoController::class, 'salvar'])->name('agendamento.salvar');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::post('/agendamentos/{id}/pagar', [AgendamentoController::class, 'pagar'])->name('agendamento.pagar');
 });
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');

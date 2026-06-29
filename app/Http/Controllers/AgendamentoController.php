@@ -10,6 +10,9 @@ use App\Models\Especialidade;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Convenio;
+use Illuminate\Support\Facades\Http;
+use App\Models\Configuracao;
+
 class AgendamentoController extends Controller
 {
     /**
@@ -119,10 +122,55 @@ class AgendamentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Agendamento $agendamento)
+    public function pagar($id)
     {
-        //
+       $agendamento = Agendamento::with('cliente')->findOrFail($id);
+
+        $url = Configuracao::where('chave', 'cacapay_url')->value('valor');
+        $token = Configuracao::where('chave', 'cacapay_token')->value('valor');
+
+        if (!$url || !$token) {
+            return redirect()->back()->with('erro', 'API de pagamento não configurada no sistema.');
+        }
+
+        $valorConsulta = \Illuminate\Support\Facades\DB::table('especialidades_profissionais')
+            ->where('profissional_id', $agendamento->profissional_id)
+            ->value('valor_consulta');
+
+        if (!$valorConsulta) {
+            return redirect()->back()->with('erro', 'Valor da consulta não encontrado para este profissional.');
+        }
+
+        try {
+           $response = Http::withoutVerifying() 
+                ->withHeaders([
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($url . '/api/compras', [
+                'cpf'   => $agendamento->cliente->cpf,
+                'token' => $token,
+                'valor' => $valorConsulta,
+                'nome'  => $agendamento->cliente->nome,
+                'email' => $agendamento->cliente->email,
+            ]);
+
+            if ($response->successful()) {
+                $agendamento->status_pagamento = 'Pago';
+                $agendamento->save();
+                return redirect()->back()->with('sucesso', 'Pagamento aprovado com sucesso!');
+            } else {
+                $mensagemErro = $response->json('message') ?? 'Transação negada.';
+                return redirect()->back()->with('erro', 'Pagamento recusado: ' . $mensagemErro);
+            }
+           // } catch (\Exception $e) {
+            // dd($e->getMessage(), $e->getTraceAsString()); 
+             
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('erro', 'O sistema de pagamentos está indisponível.');
     }
+}
 
     /**
      * Update the specified resource in storage.
@@ -139,4 +187,5 @@ class AgendamentoController extends Controller
     {
         //
     }
+
 }

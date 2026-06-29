@@ -13,79 +13,49 @@
         </form>
     </div>
 
-    @if(session('sucesso'))
-        <div class="alert alert-success mb-4">
-            {{ session('sucesso') }}
-        </div>
-    @endif
 
     @if($user->is_admin)
-        <div class="row justify-content-center">
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 border-bottom pb-4">
+            <a href="{{ url('/profissionais') }}" class="btn btn-success fw-bold px-4">Profissionais</a>
+            <a href="{{ url('/especialidades') }}" class="btn btn-success fw-bold px-4">Especialidades</a>
+            <a href="{{ url('/convenios') }}" class="btn btn-success fw-bold px-4">Convênios</a>
+            <a href="{{ url('/clientes') }}" class="btn btn-success fw-bold px-4">Clientes</a>
+            <a href="{{ url('/agendamentos') }}" class="btn btn-success fw-bold px-4">Agendamentos</a>
+        </div>
+
+        <div class="row mt-2">
             <div class="col-md-4 mb-4">
-                <div class="card border-0 h-100">
-                    <div class="card-header bg-secondary text-center text-white fw-bold">
-                        Profissionais
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white text-success fw-bold text-center border-0 pt-3">
+                        Agendamento por Especialidade
                     </div>
-                    <div class="card-body bg-light d-flex flex-column text-center p-4">
-                        <h5 class="card-title text-success mb-3">Gerenciar Equipe</h5>
-                        <p class="card-text text-muted mb-4">Cadastre, edite ou remova profissionais do sistema.</p>
-                        <a href="{{ url('/profissionais') }}" class="btn btn-success mt-auto fw-bold mx-auto w-75">Acessar Controle</a>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <canvas id="graficoEspecialidades"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="card border-0 h-100">
-                    <div class="card-header bg-secondary text-center text-white fw-bold">
-                        Especialidades
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white text-success fw-bold text-center border-0 pt-3">
+                        Agendamento por Profissional
                     </div>
-                    <div class="card-body bg-light d-flex flex-column text-center p-4">
-                        <h5 class="card-title text-success mb-3">Áreas de Atuação</h5>
-                        <p class="card-text text-muted mb-4">Gerencie as especialidades médicas oferecidas.</p>
-                        <a href="{{ url('/especialidades') }}" class="btn btn-success mt-auto fw-bold mx-auto w-75">Acessar Controle</a>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <canvas id="graficoProfissionais"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="card border-0 h-100">
-                    <div class="card-header bg-secondary text-center text-white fw-bold">
-                        Convênios
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white text-success fw-bold text-center border-0 pt-3">
+                        Agendamento por Convênio
                     </div>
-                    <div class="card-body bg-light d-flex flex-column text-center p-4">
-                        <h5 class="card-title text-success mb-3">Planos de Saúde</h5>
-                        <p class="card-text text-muted mb-4">Cadastre e atualize os convênios aceitos na clínica.</p>
-                        <a href="{{ url('/convenios') }}" class="btn btn-success mt-auto fw-bold mx-auto w-75">Acessar Controle</a>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <canvas id="graficoConvenios"></canvas>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card border-0 h-100">
-                    <div class="card-header bg-secondary text-center text-white fw-bold">
-                        Clientes
-                    </div>
-                    <div class="card-body bg-light d-flex flex-column text-center p-4">
-                        <h5 class="card-title text-success mb-3">Pacientes</h5>
-                        <p class="card-text text-muted mb-4">Visualize e gerencie os cadastros dos pacientes.</p>
-                        <a href="{{ url('/clientes') }}" class="btn btn-success mt-auto fw-bold mx-auto w-75">Acessar Controle</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card border-0 h-100">
-                    <div class="card-header bg-secondary text-center text-white fw-bold">
-                        Agendamentos
-                    </div>
-                    <div class="card-body bg-light d-flex flex-column text-center p-4">
-                        <h5 class="card-title text-success mb-3">Visão Geral</h5>
-                        <p class="card-text text-muted mb-4">Acompanhe todas as consultas marcadas na clínica.</p>
-                        <a href="{{ url('/agendamentos') }}" class="btn btn-success mt-auto fw-bold mx-auto w-75">Acessar Controle</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     @else
@@ -103,7 +73,19 @@
                 </div>
             </div>
         </div>
+                <div class="container mt-4">
+            
+            @if(session('sucesso'))
+                <div class="alert alert-success mb-4">
+                    {{ session('sucesso') }}
+                </div>
+            @endif
 
+            @if(session('erro'))
+                <div class="alert alert-danger mb-4">
+                    {{ session('erro') }}
+                </div>
+            @endif
         <div class="card border-0 mb-5">
             <div class="card-header bg-secondary text-center text-white fw-bold">
                 Meus Agendamentos
@@ -131,10 +113,17 @@
                                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($agendamento->horario)->format('H:i') }}</td>
                                         <td class="px-4 py-3">{{ $agendamento->profissional->nome }}</td>
                                         <td class="px-4 py-3">
-                                            @if(\Carbon\Carbon::parse($agendamento->data)->isPast())
-                                                <span class="badge bg-primary">Realizado</span>
+                                         @if(\Carbon\Carbon::parse($agendamento->data)->isPast())
+                                                <span class="badge bg-secondary">Realizado</span>
+                                            @elseif($agendamento->status_pagamento == 'Pago')
+                                                <span class="badge bg-success">Pago</span>
                                             @else
-                                                <span class="badge bg-success">Confirmado</span>
+                                                <form action="{{ route('agendamento.pagar', $agendamento->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-primary fw-bold shadow-sm">
+                                                        Pagar
+                                                    </button>
+                                                </form>
                                             @endif
                                         </td>
                                     </tr>
@@ -147,4 +136,64 @@
         </div>
     @endif
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const cores = ['#198754', '#20c997', '#0dcaf0', '#ffc107', '#6c757d', '#0d6efd', '#d63384'];
+
+    const ctxEspecialidades = document.getElementById('graficoEspecialidades');
+    if (ctxEspecialidades) {
+        new Chart(ctxEspecialidades, {
+            type: 'doughnut', 
+            data: {
+                labels: @json($labelsEspecialidades ?? []),
+                datasets: [{
+                    data: @json($dadosEspecialidades ?? []),
+                    backgroundColor: cores,
+                    borderWidth: 0
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+
+    const ctxProfissionais = document.getElementById('graficoProfissionais');
+    if (ctxProfissionais) {
+        new Chart(ctxProfissionais, {
+            type: 'pie', 
+            data: {
+                labels: @json($labelsProfissionais ?? []),
+                datasets: [{
+                    data: @json($dadosProfissionais ?? []),
+                    backgroundColor: cores, 
+                    borderWidth: 0
+                }]
+            },
+            options: { 
+                responsive: true, 
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    }
+
+    const ctxConvenios = document.getElementById('graficoConvenios');
+    if (ctxConvenios) {
+        new Chart(ctxConvenios, {
+            type: 'pie', 
+            data: {
+                labels: @json($labelsConvenios ?? []),
+                datasets: [{
+                    data: @json($dadosConvenios ?? []),
+                    backgroundColor: ['#198754', '#ffc107', '#20c997', '#6c757d'],
+                    borderWidth: 0
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+});
+</script>
 @endsection
