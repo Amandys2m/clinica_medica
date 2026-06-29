@@ -78,7 +78,19 @@
                 </div>
             </div>
         </div>
+                <div class="container mt-4">
+            
+            @if(session('sucesso'))
+                <div class="alert alert-success mb-4">
+                    {{ session('sucesso') }}
+                </div>
+            @endif
 
+            @if(session('erro'))
+                <div class="alert alert-danger mb-4">
+                    {{ session('erro') }}
+                </div>
+            @endif
         <div class="card border-0 mb-5">
             <div class="card-header bg-secondary text-center text-white fw-bold">
                 Meus Agendamentos
@@ -106,10 +118,17 @@
                                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($agendamento->horario)->format('H:i') }}</td>
                                         <td class="px-4 py-3">{{ $agendamento->profissional->nome }}</td>
                                         <td class="px-4 py-3">
-                                            @if(\Carbon\Carbon::parse($agendamento->data)->isPast())
-                                                <span class="badge bg-primary">Realizado</span>
+                                         @if(\Carbon\Carbon::parse($agendamento->data)->isPast())
+                                                <span class="badge bg-secondary">Realizado</span>
+                                            @elseif($agendamento->status_pagamento == 'Pago')
+                                                <span class="badge bg-success">Pago</span>
                                             @else
-                                                <span class="badge bg-success">Confirmado</span>
+                                                <form action="{{ route('agendamento.pagar', $agendamento->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-primary fw-bold shadow-sm">
+                                                        Pagar
+                                                    </button>
+                                                </form>
                                             @endif
                                         </td>
                                     </tr>
