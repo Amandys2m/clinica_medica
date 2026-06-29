@@ -13,11 +13,6 @@
         </form>
     </div>
 
-    @if(session('sucesso'))
-        <div class="alert alert-success mb-4">
-            {{ session('sucesso') }}
-        </div>
-    @endif
 
     @if($user->is_admin)
         <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 border-bottom pb-4">
