@@ -9,6 +9,7 @@ use App\Models\Especialidade;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ConfiguracaoController;
 
 
 Route::get('/', function () {
@@ -51,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/agendamentos/novo', [AgendamentoController::class, 'novo'])->name('agendamento.novo');
 Route::post('/agendamentos/salvar', [AgendamentoController::class, 'salvar'])->name('agendamento.salvar');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/configuracoes', [ConfiguracaoController::class, 'index'])->name('configuracoes.index');
+Route::post('/configuracoes', [ConfiguracaoController::class, 'salvar'])->name('configuracoes.salvar');
 });
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');

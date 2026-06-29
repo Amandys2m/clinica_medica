@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="h-100" data-bs-theme="dark">
+<html lang="pt-BR" data-bs-theme="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,9 +40,9 @@
         
     </style>
 </head>
-<body class="d-flex h-100 text-center text-dark">
+<body class="d-flex min-vh-100 text-center text-dark">
 
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column overflow-auto">
+    <div class="cover-container d-flex w-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
                 <h3 class="float-md-start mb-0 fw-bold text-secondary">Centro Clínico</h3>
